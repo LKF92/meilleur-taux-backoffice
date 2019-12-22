@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
-import EstimateCard from "./EstimateCard";
 import EstimatePage from "./EstimatePage";
+import Login from "./Login";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -13,16 +13,20 @@ import {
   Link,
   useHistory
 } from "react-router-dom";
+import Cookie from "js-cookie";
 
 function App() {
+  const token = Cookie.get("token");
+const [reload, setReload] = useState(false)
+
   return (
     <Router>
       <Navbar />
       <Switch>
         <Route exact path="/">
-          <Dashboard />
+          {/* if no cookie, then redirect to login  */}
+          {token ? <Dashboard /> : <Login setReload={setReload} />}
         </Route>
-        {/* if no cookie then login  */}
         <Route path="/estimate/:id">
           <EstimatePage />
         </Route>
