@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Navbar from "./Navbar";
+import EstimateCard from "./EstimateCard";
+import axios from "axios";
 
 function App() {
+  const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:3000/estimate/");
+      if (response) {
+        setData(response.data);
+        setIsLoading(false);
+        console.log(response);
+      } else {
+        console.log("probleme...");
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      {isLoading ? (
+        <p>fetching data</p>
+      ) : (
+        <div className="list">
+          {data.map((estimate, index) => (
+            <EstimateCard {...estimate} key={index} index={index} data={data} setData={setData} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
