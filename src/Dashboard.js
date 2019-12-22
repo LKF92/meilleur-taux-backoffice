@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Navbar from "./Navbar";
 import EstimateCard from "./EstimateCard";
 import axios from "axios";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link,
-  useHistory
-} from "react-router-dom";
 
 export default function Dashboard() {
   const [data, setData] = useState("");
@@ -18,7 +9,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/estimate/");
+      const response = await axios.get("https://meilleur-taux-backend.herokuapp.com/estimate/");
       if (response) {
         setData(response.data);
         setIsLoading(false);

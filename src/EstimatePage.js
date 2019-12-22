@@ -9,7 +9,7 @@ export default function EstimatePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/estimate/" + id);
+      const response = await axios.get("https://meilleur-taux-backend.herokuapp.com/estimate/" + id);
       if (response) {
         console.log(response);
         setData(response.data);

@@ -27,7 +27,7 @@ export default function EstimateCard({
   const history = useHistory();
 
   const handleDelete = async () => {
-    const response = await axios.post("http://localhost:3000/estimate/delete", {
+    const response = await axios.post("https://meilleur-taux-backend.herokuapp.com/estimate/delete", {
       _id: _id
     });
     let copy = [...data];
