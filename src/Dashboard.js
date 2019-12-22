@@ -10,7 +10,7 @@ export default function Dashboard() {
   useEffect(() => {
       console.log("useffect")
     const fetchData = async () => {
-      const response = await axios.get("https://meilleur-taux-backend.herokuapp.com/estimate/");
+      const response = await axios.get("https://meilleur-taux-backend.herokuapp.com/estimate/all");
       if (response) {
         setData(response.data);
         setIsLoading(false);
