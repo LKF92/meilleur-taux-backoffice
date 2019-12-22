@@ -8,8 +8,10 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      console.log("useffect")
+    console.log("useffect");
     const fetchData = async () => {
+      //fonctionne en local
+      //   const response = await axios.get("http://localhost:3000/estimate/all");
       const response = await axios.get("https://meilleur-taux-backend.herokuapp.com/estimate/all");
       if (response) {
         setData(response.data);
@@ -18,7 +20,7 @@ export default function Dashboard() {
       } else {
         console.log("probleme...");
       }
-    }
+    };
     fetchData();
   }, []);
 
@@ -28,9 +30,10 @@ export default function Dashboard() {
         <p>fetching data</p>
       ) : (
         <div className="list">
-          {data && data.map((estimate, index) => (
-            <EstimateCard {...estimate} key={index} index={index} data={data} setData={setData} />
-          ))}
+          {data &&
+            data.map((estimate, index) => (
+              <EstimateCard {...estimate} key={index} index={index} data={data} setData={setData} />
+            ))}
         </div>
       )}
     </>
