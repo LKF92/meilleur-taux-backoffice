@@ -1,40 +1,33 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./Navbar";
+import Dashboard from "./Dashboard";
 import EstimateCard from "./EstimateCard";
+import EstimatePage from "./EstimatePage";
 import axios from "axios";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link,
+  useHistory
+} from "react-router-dom";
 
 function App() {
-  const [data, setData] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("http://localhost:3000/estimate/");
-      if (response) {
-        setData(response.data);
-        setIsLoading(false);
-        console.log(response);
-      } else {
-        console.log("probleme...");
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
-    <div className="App">
+    <Router>
       <Navbar />
-      {isLoading ? (
-        <p>fetching data</p>
-      ) : (
-        <div className="list">
-          {data.map((estimate, index) => (
-            <EstimateCard {...estimate} key={index} index={index} data={data} setData={setData} />
-          ))}
-        </div>
-      )}
-    </div>
+      <Switch>
+        <Route exact path="/">
+          <Dashboard />
+        </Route>
+        {/* if no cookie then login  */}
+        <Route path="/estimate/:id">
+          <EstimatePage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

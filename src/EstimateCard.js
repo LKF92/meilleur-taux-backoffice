@@ -1,4 +1,12 @@
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  Link,
+  useHistory
+} from "react-router-dom";
 import Trash from "./Trash";
 import axios from "axios";
 
@@ -16,6 +24,8 @@ export default function EstimateCard({
   data,
   setData
 }) {
+  const history = useHistory();
+
   const handleDelete = async () => {
     const response = await axios.post("http://localhost:3000/estimate/delete", {
       _id: _id
@@ -27,17 +37,19 @@ export default function EstimateCard({
   };
 
   return (
-    <div className="card-estimate">
-      <div className="trash" onClick={handleDelete}>
-        <Trash />
+    <>
+      <div className="card-estimate">
+        <div className="trash" onClick={handleDelete}>
+          <Trash />
+        </div>
+        <Link to={"/estimate/" + _id}>
+          <p>Order ID : {orderId}</p>
+          <p>Email : {email}</p>
+          <p> Type de bien : {typeOfProperty}</p>
+          <p> État du bien :{conditionOfProperty}</p>
+          <p> Ville :{locationOfProperty.city}</p>
+        </Link>
       </div>
-      <div>
-        <p>Order ID : {orderId}</p>
-        <p>Email : {email}</p>
-        <p> Type de bien : {typeOfProperty}</p>
-        <p> État du bien :{conditionOfProperty}</p>
-        <p> Ville :{locationOfProperty.city}</p>
-      </div>
-    </div>
+    </>
   );
 }
